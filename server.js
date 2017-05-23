@@ -38,6 +38,10 @@ function translate(phrase, from, to, callback) {
   req.end()
 }
 
+translate('hello', 'en', 'es', (data) => {
+  console.log(data)
+})
+
 //Slapp starts here!!!!
 var slapp = Slapp({
   convo_store: ConvoStore(),
@@ -46,7 +50,7 @@ var slapp = Slapp({
 
 slapp.message('translate from (\\w+) to (\\w+): (.*)', (msg, text, from, to, phrase) => {
   translate(phrase, from, to, (data) => {
-    msg.say(phrase, (err, data) => {
+    msg.say(data, (err, data) => {
       if (err) {
         console.log(err)
       }
