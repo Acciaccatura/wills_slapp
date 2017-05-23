@@ -100,7 +100,7 @@ slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
   let charcode = lang.charCodeAt(0)-97
   if (charcode >= 0 && langs[charcode]) {
     let index;
-    for (index = 0; index < langs[charcode]; index++) {
+    for (index = 0; index < langs[charcode].length; index++) {
       if (langs[charcode][index].name === lang) {
         code = langs[charcode][index].code
         break
