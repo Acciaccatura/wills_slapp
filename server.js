@@ -41,14 +41,11 @@ var slapp = Slapp({
 })
 
 slapp.message('hello', (msg, text) => {
-  console.log('simplicity is key')
-  if (msg.meta.app_token) {
-    msg.say('wow!', (err, data) => {
-      if (err) {
-        console.log(err)
-      }
-    })
-  }
+  msg.say('wow!', (err, data) => {
+    if (err) {
+      console.log(err)
+    }
+  })
 })
 
 slapp.event()
