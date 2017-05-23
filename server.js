@@ -89,6 +89,11 @@ var slapp = Slapp({
 })
 
 slapp.command('setlang', '(\\w+)', (msg, text, lang) => {
+  msg.say('yo', (err, data) => {
+    if (err) {
+      console.log(err)
+    }
+  })
   console.log(text + " " + lang)
 })
 
