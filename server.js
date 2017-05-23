@@ -107,26 +107,29 @@ slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
       }
     }
   }
+  console.log(code)
   if (code) {
-    msg.respond({
-      text: translate('Do you want to keep these settings?', 'en', code),
-      callback_id: 'lang_config',
-      actions: [
-        {
-          name: 'response',
-          text: translate('Yes', 'en', code),
-          type: 'button',
-          value: code,
-          style: 'default'
-        },
-        {
-          name: 'response',
-          text: translate('No', 'en', code),
-          type: 'button',
-          value: 'no_change',
-          style: 'default'
-        }
-      ]
+    translate('Do you want to keep these settings?', 'en', code, (data) => {
+      msg.respond({
+        text: data,
+        callback_id: 'lang_config',
+        actions: [
+          {
+            name: 'response',
+            text: translate('Yes', 'en', code),
+            type: 'button',
+            value: code,
+            style: 'default'
+          },
+          {
+            name: 'response',
+            text: translate('No', 'en', code),
+            type: 'button',
+            value: 'no_change',
+            style: 'default'
+          }
+        ]
+      })
     })
   }
 })
@@ -145,6 +148,6 @@ slapp.action('lang_config', 'response', (msg, val) => {
 var app = slapp.attachToExpress(express())
 
 app.listen(port, () => {
-  getLanguages(langs, (data) => {console.log('Got languages.')})
+  getLanguages(langs, (data) => {console.log('Got languages.'); console.log(data)})
   console.log('Brunch was delicious, and now we usually see a movie, like we always do. What are you thinking this time, partner, ' + port + '?')
 })
