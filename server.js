@@ -6,8 +6,8 @@ const ConvoStore = require('slapp-convo-beepboop')
 const Context = require('slapp-context-beepboop')
 
 var slapp = Slapp({
-  convo_store = ConvoStore()
-  context = Context()
+  convo_store: ConvoStore(),
+  context: Context()
 })
 
 slapp.event('message.im', (msg) => {
