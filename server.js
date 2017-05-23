@@ -10,7 +10,7 @@ var slapp = Slapp({
   context: Context()
 })
 
-slapp.message('*', ['direct_message'], (msg, text) => {
+slapp.message('eyy', ['direct_message'], (msg, text) => {
   msg.say(':o', (err, data) => {})
 })
 
