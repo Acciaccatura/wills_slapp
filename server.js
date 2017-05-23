@@ -42,7 +42,7 @@ function getLanguages(langs, callback) {
     })
     res.on('end', (end) => {
       json_data = JSON.parse(json_data)
-      var index;
+      let index;
       //store the loaded languages into variable langs as a list of buckets sorted alphabetically
       for (index = 0; index < json_data.length; index++) {
         let order = json_data[index].languageName.charCodeAt(0)-65
@@ -78,10 +78,16 @@ function translate(phrase, from, to, callback) {
   req.end()
 }
 
+//callback: callback(data:String)
+function translateFor(phrase, app_id, from, callback) {
+  let code = temp_langs[app_id] || 'en'
+  translate(phrase, from, code, callback)
+}
+
 //Slapp starts here!!!!
 
 //this is used to store key-value pairs of app_token s and their preferred languages
-var temp_langs = []
+var temp_langs = {}
 
 var slapp = Slapp({
   convo_store: ConvoStore(),
@@ -89,12 +95,50 @@ var slapp = Slapp({
 })
 
 slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
-  msg.say('yo', (err, data) => {
-    if (err) {
-      console.log(err)
+  let code;
+  lang = lang.toLowerCase()
+  let charcode = lang.charCodeAt(0)-97
+  if (charcode >= 0 && langs[charcode]) {
+    let index;
+    for (index = 0; index < langs[charcode]; index++) {
+      if (langs[charcode][index].name === lang) {
+        code = langs[charcode][index].code
+        break
+      }
     }
-  })
-  console.log(text + " " + lang)
+  }
+  if (code) {
+    msg.respond({
+      text: translate('Do you want to keep these settings?', 'en', code),
+      callback_id: 'lang_config',
+      actions: [
+        {
+          name: 'response',
+          text: translate('Yes', 'en', code),
+          type: 'button',
+          value: code,
+          style: 'default'
+        },
+        {
+          name: 'response',
+          text: translate('No', 'en', code),
+          type: 'button',
+          value: 'no_change',
+          style: 'default'
+        }
+      ]
+    })
+  }
+})
+
+slapp.action('lang_config', 'response', (msg, val) => {
+  if (val != 'no_change') {
+    msg.respond(translate('Your changes have been saved.', 'en', val), (msg2, data) => {
+      temp_langs[msg.meta.app_user_id] = code
+    })
+  } else {
+    msg.respond('Ok,', (msg2, data) => {})
+  }
 })
 
 //initialize express!!!
