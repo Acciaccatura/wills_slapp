@@ -10,7 +10,7 @@ var slapp = Slapp({
   context: Context()
 })
 
-slapp.event('message.im', (msg) => {
+slapp.message('*', (msg, text) => {
   msg.say(':o', (err, data) => {})
 })
 
