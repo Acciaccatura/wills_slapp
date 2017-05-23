@@ -16,7 +16,7 @@ slapp.message('eyy', ['direct_message'], (msg, text) => {
   msg.say(':o', (err, data) => {})
 })
 
-slapp.event('message.channels', (msg) => {
+slapp.event('message', (msg) => {
   if (msg.meta.app_token) {
     msg.say('howdy', (err, data) => {
       if (err) {
