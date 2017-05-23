@@ -88,7 +88,7 @@ var slapp = Slapp({
   context: Context()
 })
 
-slapp.command('setlang', '(\\w+)', (msg, text, lang) => {
+slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
   msg.say('yo', (err, data) => {
     if (err) {
       console.log(err)
