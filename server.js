@@ -8,6 +8,7 @@ const http = require('http')
 
 const port = process.env.PORT || 3000
 
+/*
 //test for translation API
 const translate_options = {
   'host': 'www.transltr.org',
@@ -17,6 +18,7 @@ const translate_options = {
     'Content-Type': 'application/json'
   }
 }
+
 //note to self, modularize this if you ever consider making this something
 function translate(phrase, from, to, callback) {
   let string = {
@@ -33,6 +35,7 @@ function translate(phrase, from, to, callback) {
   req.write(JSON.stringify(string))
   req.end()
 }
+*/
 
 //Slapp starts here!!!!
 var slapp = Slapp({
