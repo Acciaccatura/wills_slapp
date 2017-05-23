@@ -40,9 +40,13 @@ var slapp = Slapp({
   context: Context()
 })
 
-slapp.message('hello', ['ambient'], (msg, text) => {
+slapp.message('hello', (msg, text) => {
   if (msg.meta.app_token) {
-    console.log(text)
+    msg.say('wow!', (err, data) => {
+      if (err) {
+        console.log(err)
+      }
+    })
   }
 })
 
