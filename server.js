@@ -42,7 +42,7 @@ var slapp = Slapp({
 
 slapp.message('hello', ['ambient'], (msg, text) => {
   if (msg.meta.app_token) {
-    console.log('look fabulous')
+    console.log(text)
   }
 })
 
