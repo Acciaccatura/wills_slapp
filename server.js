@@ -41,6 +41,7 @@ var slapp = Slapp({
 })
 
 slapp.message('hello', (msg, text) => {
+  console.log('simplicity is key')
   if (msg.meta.app_token) {
     msg.say('wow!', (err, data) => {
       if (err) {
@@ -53,8 +54,7 @@ slapp.message('hello', (msg, text) => {
 slapp.event()
 
 //initialize express!!!
-var app = express()
-slapp.attachToExpress(app)
+var app = slapp.attachToExpress(express())
 
 app.listen(port, () => {
   console.log('Brunch was delicious, and now we usually see a movie, like we always do. What are you thinking this time, partner, ' + port + '?')
