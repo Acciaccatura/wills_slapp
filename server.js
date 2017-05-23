@@ -46,14 +46,11 @@ var slapp = Slapp({
 
 slapp.message('translate from (\\w+) to (\\w+): (.*)', (msg, text, from, to, phrase) => {
   translate(phrase, from, to, (data) => {
-    let trans = JSON.parse(data)
-    if (trans.translationText) {
-      msg.say(phrase, (err, data) => {
-        if (err) {
-          console.log(err)
-        }
-      })
-    }
+    msg.say(phrase, (err, data) => {
+      if (err) {
+        console.log(err)
+      }
+    })
   })
 })
 
