@@ -109,21 +109,23 @@ slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
   }
   console.log(code)
   if (code) {
-    translate('Do you want to keep these settings?', 'en', code, (data) => {
+    translate('Do you want to keep these settings? @Yes @No', 'en', code, (data) => {
+      var re = new RegExp('(@\\w+)')
+      var found = data.match(re)
       msg.respond({
-        text: data,
+        text: data.substring(data.indexOf('@')),
         callback_id: 'lang_config',
         actions: [
           {
             name: 'response',
-            text: translate('Yes', 'en', code),
+            text: found[0],
             type: 'button',
             value: code,
             style: 'default'
           },
           {
             name: 'response',
-            text: translate('No', 'en', code),
+            text: found[1],
             type: 'button',
             value: 'no_change',
             style: 'default'
