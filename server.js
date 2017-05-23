@@ -11,11 +11,7 @@ var slapp = Slapp({
 })
 
 slapp.event('message.im', (msg) => {
-  if (msg.meta.app_token) {
-    msg.say('hello, ' + msg.meta.app_user_id, (err, data) => {})
-  } else {
-    msg.say('whoa', (err, data) => {})
-  }
+  msg.say(':o', (err, data) => {})
 })
 
 var app = express()
