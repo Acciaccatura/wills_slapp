@@ -110,14 +110,14 @@ slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
   console.log(code)
   if (code) {
     //callbacks eh
-    translate('Do you want to keep these settings?', 'en', code, (phrase) => {
+    translate('Want to keep these settings?', 'en', code, (phrase) => {
       translate('Yes', 'en', code, (yes) => {
         translate('No', 'en', code, (no) => {
           msg.respond({
             text: phrase,
             attachments: [
             {
-              text: phrase,
+              text: '',
               callback_id: 'lang_config',
               actions: [
                 {
@@ -136,7 +136,7 @@ slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
                 }
               ]
             }]
-          })
+          }, (err) => {})
         })
       })
     })
@@ -145,11 +145,13 @@ slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
 
 slapp.action('lang_config', 'response', (msg, val) => {
   if (val != 'no_change') {
-    msg.respond(translate('Your changes have been saved.', 'en', val), (msg2, data) => {
-      temp_langs[msg.meta.app_user_id] = code
+    translate('Your changes are saved.', 'en', val, (data) => {
+      msg.respond(data, (err) => {
+        temp_langs[msg.meta.app_user_id] = code
+      })
     })
   } else {
-    msg.respond('Ok,', (msg2, data) => {})
+    msg.respond('Ok,', (err) => {})
   }
 })
 
