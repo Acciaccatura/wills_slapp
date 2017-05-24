@@ -94,6 +94,7 @@ var slapp = Slapp({
   context: Context()
 })
 
+//TODO: Fix the YES/NO options!
 slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
   let code;
   lang = lang.toLowerCase()
@@ -109,28 +110,31 @@ slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
   }
   console.log(code)
   if (code) {
-    translate('Do you want to keep these settings? @Yes @No', 'en', code, (data) => {
-      var re = new RegExp('(@\\w+)')
-      var found = data.match(re)
-      msg.respond({
-        text: data.substring(data.indexOf('@')),
-        callback_id: 'lang_config',
-        actions: [
-          {
-            name: 'response',
-            text: found[0],
-            type: 'button',
-            value: code,
-            style: 'default'
-          },
-          {
-            name: 'response',
-            text: found[1],
-            type: 'button',
-            value: 'no_change',
-            style: 'default'
-          }
-        ]
+    //callbacks eh
+    translate('Do you want to keep these settings?', 'en', code, (phrase) => {
+      translate('Yes', 'en', code, (yes) => {
+        translate('No', 'en', code, (no) => {
+          msg.respond({
+            text: phrase,
+            callback_id: 'lang_config',
+            actions: [
+              {
+                name: 'response',
+                text: yes,
+                type: 'button',
+                value: code,
+                style: 'default'
+              },
+              {
+                name: 'response',
+                text: no,
+                type: 'button',
+                value: 'no_change',
+                style: 'default'
+              }
+            ]
+          })
+        })
       })
     })
   }
