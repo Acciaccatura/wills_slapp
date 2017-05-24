@@ -94,7 +94,6 @@ var slapp = Slapp({
   context: Context()
 })
 
-//TODO: Fix the YES/NO options!
 slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
   let code;
   lang = lang.toLowerCase()
@@ -116,23 +115,27 @@ slapp.command('/setlang', '(\\w+)', (msg, text, lang) => {
         translate('No', 'en', code, (no) => {
           msg.respond({
             text: phrase,
-            callback_id: 'lang_config',
-            actions: [
-              {
-                name: 'response',
-                text: yes,
-                type: 'button',
-                value: code,
-                style: 'default'
-              },
-              {
-                name: 'response',
-                text: no,
-                type: 'button',
-                value: 'no_change',
-                style: 'default'
-              }
-            ]
+            attachments: [
+            {
+              text: phrase,
+              callback_id: 'lang_config',
+              actions: [
+                {
+                  name: 'response',
+                  text: yes,
+                  type: 'button',
+                  value: code,
+                  style: 'default'
+                },
+                {
+                  name: 'response',
+                  text: no,
+                  type: 'button',
+                  value: 'no_change',
+                  style: 'default'
+                }
+              ]
+            }]
           })
         })
       })
